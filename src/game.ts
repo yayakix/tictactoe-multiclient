@@ -1,6 +1,6 @@
-type Row = [string, string, string];
+export type Row = [string, string, string];
 
-type Board = Row[];
+export type Board = Row[];
 
 const board = [
   ["", "", ""],
@@ -15,7 +15,7 @@ const row3: Row = ["x", "o", "o"];
 const otherboard = [row1, row2, row3] satisfies Board;
 
 // item is an array of 3 strings
-type Item = [string, string, string];
+export type Item = [string, string, string];
 // [['','',''],['','',''],['','','']]
 // takes array of items that have 3 pieces
 const checkFunc = (array: Item[]) => {
