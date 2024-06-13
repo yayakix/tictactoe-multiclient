@@ -58,7 +58,7 @@ const isBoardFull = (b: typeof board) => {
   return true;
 };
 
-const checkBoard = (b: typeof board) => {
+export const checkBoard = (b: typeof board) => {
   const rows = b;
   const columns = getColumns(b);
   const diagonals = getDiagonals(b);
@@ -69,7 +69,7 @@ const checkBoard = (b: typeof board) => {
 
   // check for winner first
   if (checkOutcome.winner !== null) {
-    return { checkOutcome };
+    return { winner: checkOutcome.winner, outcome: checkOutcome.outcome };
   }
   // then check for a tie
   if (boardFullOutcome == true) {
@@ -79,4 +79,4 @@ const checkBoard = (b: typeof board) => {
   return checkOutcome;
 };
 // console.log(checkBoard(board));
-console.log(checkBoard(otherboard));
+// console.log(checkBoard(otherboard));

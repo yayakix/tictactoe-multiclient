@@ -1,33 +1,67 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { checkBoard } from './game'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const blankBoard = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ]
+
+  const [player, setPlayer] = useState('X')
+  const [gameBoard, setGameBoard] = useState(blankBoard)
+  const [winner, setWinner] = useState(null)
+
+  const nextTurn = () => {
+    if (player === 'X') {
+      setPlayer('O')
+    } else {
+      setPlayer('X')
+    }
+  }
+  const handleClick = (e) => {
+    e.target.innerHTML = player
+    const rowId = Number(e.target.parentNode.id)
+    const itemId = Number(e.target.id)
+    // go through copy and update value at position
+    // listcopy[itemId][rowId] = 'O'
+    let copy = [...gameBoard]
+    copy[itemId][rowId] = player
+    setGameBoard(copy)
+    nextTurn()
+    const result = checkBoard(copy)
+    console.log(result.outcome)
+    if (result.outcome == 'win') {
+
+      setWinner(`Winner is ${result.winner}`)
+    }
+
+    else if (result.outcome == 'tie') {
+      setWinner('Tie')
+    }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {winner}
+      <h1 className='mb-4'>Tic Tac Toe</h1>
+      <div className='columns-3'>
+        {gameBoard.map((row, rowindex) => {
+          return <div className='' id={rowindex.toString()}>{
+            row.map((string, itemIdx) => {
+              return <div onClick={handleClick} id={itemIdx.toString()} className=' grid-cols-3  w-20 h-20 flex justify-center items-center m-0 gap-6 shadow-2xl shadow-white'></div>
+            })
+          }</div>
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <br>
+      </br>
+
+      <button onClick={() => {
+        setWinner(null)
+        window.location.reload()
+      }}>Play Again</button>
     </>
   )
 }
