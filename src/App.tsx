@@ -48,10 +48,10 @@ function App() {
 
   return (
     <>
-      {winner && <>{winner}</>}
-      {!winner && <>{player}'s Turn</>}
       <h1 className='mb-4'>Tic Tac Toe</h1>
-      <div className='columns-3'>
+      {winner && <>{winner == 'Tie' ? <>Tie game</> : <>{winner} wins</>} </>}
+      {!winner && <>{player}'s Turn</>}
+      <div className='columns-3 bg-red-50'>
         {gameBoard.map((row, rowindex) => {
           return <div className='' id={rowindex.toString()}>{
             row.map((_string, itemIdx) => {
