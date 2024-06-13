@@ -2,14 +2,14 @@ import {
   useState, MouseEvent
 } from 'react'
 import './App.css'
-import { Board, checkBoard, Item, Row } from './game'
+import { Board, checkBoard } from './game'
 
 function App() {
   const blankBoard = [
     ["", "", ""],
     ["", "", ""],
     ["", "", ""],
-  ]
+  ] satisfies Board
 
   const [player, setPlayer] = useState('X')
   const [gameBoard, setGameBoard] = useState(blankBoard)
