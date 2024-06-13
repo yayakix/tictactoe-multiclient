@@ -8,12 +8,6 @@ const board = [
   ["", "", ""],
 ] satisfies Board;
 
-const row1: Row = ["x", "o", "o"];
-const row2: Row = ["o", "x", "x"];
-const row3: Row = ["x", "o", "o"];
-
-const otherboard = [row1, row2, row3] satisfies Board;
-
 // item is an array of 3 strings
 export type Item = [string, string, string];
 // [['','',''],['','',''],['','','']]
