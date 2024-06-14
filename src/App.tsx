@@ -3,7 +3,7 @@ import {
   useEffect
 } from 'react'
 import './App.css'
-import { Board, checkBoard } from './game'
+import { Board } from './game'
 
 function App() {
 
@@ -13,14 +13,13 @@ function App() {
     ["", "", ""],
   ] satisfies Board
 
-  const [game, setGame] = useState(null)
+  const [game, setGame] = useState<any>(null)
 
   const [player, setPlayer] = useState('')
   const [gameBoard, setGameBoard] = useState(blankBoard)
-  const [gameState, setGameState] = useState({})
+  const [gameState, setGameState] = useState<any>({})
   const [poller, setPoller] = useState(0)
   const [cont, setCont] = useState(true)
-  const [text, setText] = useState('')
 
 
   useEffect(() => {
@@ -51,7 +50,6 @@ function App() {
       setCont(false)
     } else if (gameState.outcome == 'tie') {
       setCont(false)
-      setText('tie game')
     }
     else {
       console.log('cont.')
@@ -79,7 +77,7 @@ function App() {
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     // Add text to screen, get the current position, and send that data to handle move
-    console.log('is:', game.gameOn)
+    console.log('is:', game?.gameOn)
 
     if (cont) {
       // e.currentTarget.innerHTML = player
@@ -113,8 +111,6 @@ function App() {
       </br>
       <button onClick={() => {
         setCont(true)
-        setText('')
-
         fetch("http://localhost:4000/game/tictactoe/restart", {
           method: "POST", // or 'PUT'
           headers: {
