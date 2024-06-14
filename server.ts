@@ -19,6 +19,7 @@ let games = {
     winState: { outcome: null, winner: null },
     player1: { token: "X", id: "" },
     player2: { token: "O", id: "" },
+    gameOn: true,
   },
 };
 
@@ -48,13 +49,22 @@ app.post("/game/:id/move", (req: Request, res: Response) => {
   const rowId = req.body.rowId;
   const itemId = req.body.itemId;
   const player = game.currentPlayer;
-  //   do logic to update position of current player X or O
+  //   do logic to update position of current player X or O, do nothing if the spot is already filled
+  if (
+    games[id].board[itemId][rowId] == "X" ||
+    games[id].board[itemId][rowId] == "O"
+  ) {
+    return;
+  }
   games[id].board[itemId][rowId] = player;
   //   game.board logic
   const currentBoardState = checkBoard(game.board);
   console.log(currentBoardState);
   game.winState.outcome = currentBoardState.outcome;
   game.winState.winner = currentBoardState.winner;
+  if (game.winState.outcome == "win" || game.winState.outcome == "tie") {
+    game.gameOn = false;
+  }
   game.currentPlayer = player === "X" ? "O" : "X";
 
   res.json({ game });
@@ -76,6 +86,7 @@ app.post("/game/:id/restart", (req: Request, res: Response) => {
   ];
   games[id].winState.outcome = null;
   games[id].winState.winner = null;
+  games[id].gameOn = true;
 
   res.json({ game });
 });

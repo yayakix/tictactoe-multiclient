@@ -3,7 +3,7 @@ import {
   useEffect
 } from 'react'
 import './App.css'
-import { Board, checkBoard } from './game'
+import { Board } from './game'
 
 function App() {
 
@@ -13,14 +13,13 @@ function App() {
     ["", "", ""],
   ] satisfies Board
 
-  const [game, setGame] = useState(null)
+  const [game, setGame] = useState<any>(null)
 
   const [player, setPlayer] = useState('')
   const [gameBoard, setGameBoard] = useState(blankBoard)
-  const [gameState, setGameState] = useState({})
+  const [gameState, setGameState] = useState<any>({})
   const [poller, setPoller] = useState(0)
   const [cont, setCont] = useState(true)
-  const [text, setText] = useState('')
 
 
   useEffect(() => {
@@ -37,6 +36,7 @@ function App() {
           setPlayer(data.game.currentPlayer)
           setGameBoard(data.game.board)
           setGameState(data.game.winState)
+          setCont(data.game.gameOn)
         }
         );
       console.log(game)
@@ -45,12 +45,11 @@ function App() {
     // if outcome == tie, end game
     // if outcome == continue, continue
     // if outcome == win, end game
+    console.log(gameState.outcome)
     if (gameState.outcome == 'win') {
       setCont(false)
-      console.log('win or tie')
     } else if (gameState.outcome == 'tie') {
       setCont(false)
-      setText('tie game')
     }
     else {
       console.log('cont.')
@@ -78,8 +77,10 @@ function App() {
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     // Add text to screen, get the current position, and send that data to handle move
+    console.log('is:', game?.gameOn)
+
     if (cont) {
-      e.currentTarget.innerHTML = player
+      // e.currentTarget.innerHTML = player
       const parentRow = e.currentTarget.parentNode as HTMLElement
       const rowId = Number(parentRow.id)
       const childItem = e.target as HTMLElement
@@ -91,16 +92,17 @@ function App() {
 
   }
 
-
   return (
     <>
       <h1 className='mb-4 underline'>Tic Tac Toe</h1>
-      current: {player}
+      {cont && <>{player}'s' turn</>}
+      {gameState.outcome == 'win' && <>winner: {player === "X" ? "O" : "X"}</>}
+      {gameState.outcome == 'tie' && <>Tie</>}
       <div className='columns-3 bg-red-50 m-2'>
         {gameBoard.map((row, rowindex) => {
           return <div className='' id={rowindex.toString()}>{
             row.map((_string, itemIdx) => {
-              return <div onClick={handleClick} id={itemIdx.toString()} className=' grid-cols-3 border border-black w-20 h-20 flex justify-center items-center m-0 gap-6 shadow-2xl shadow-white text-6xl'></div>
+              return <div onClick={handleClick} id={itemIdx.toString()} className=' grid-cols-3 border border-black w-20 h-20 flex justify-center items-center m-0 gap-6 shadow-2xl shadow-white text-6xl'>{gameBoard[itemIdx][rowindex]}</div>
             })
           }</div>
         })}
@@ -109,8 +111,6 @@ function App() {
       </br>
       <button onClick={() => {
         setCont(true)
-        setText('')
-
         fetch("http://localhost:4000/game/tictactoe/restart", {
           method: "POST", // or 'PUT'
           headers: {
