@@ -21,10 +21,40 @@ let games = {
     player2: { token: "O", id: "" },
     gameOn: true,
   },
+  ["tictactoe2"]: {
+    id: "tictactoe2",
+    board: [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ],
+    currentPlayer: "X",
+    winState: { outcome: null, winner: null },
+    player1: { token: "X", id: "123" },
+    player2: { token: "O", id: "" },
+    gameOn: true,
+  },
+  ["tictactoe3"]: {
+    id: "tictactoe3",
+    board: [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ],
+    currentPlayer: "X",
+    winState: { outcome: null, winner: null },
+    player1: { token: "X", id: "456" },
+    player2: { token: "O", id: "" },
+    gameOn: true,
+  },
 };
 
 app.get("/", (req: Request, res: Response) => {
   res.json("erm hello");
+});
+
+app.get("/games", (req: Request, res: Response) => {
+  res.json({ games: games });
 });
 
 // Get a game by ID
@@ -59,7 +89,6 @@ app.post("/game/:id/move", (req: Request, res: Response) => {
   games[id].board[itemId][rowId] = player;
   //   game.board logic
   const currentBoardState = checkBoard(game.board);
-  console.log(currentBoardState);
   game.winState.outcome = currentBoardState.outcome;
   game.winState.winner = currentBoardState.winner;
   if (game.winState.outcome == "win" || game.winState.outcome == "tie") {
