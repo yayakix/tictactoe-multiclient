@@ -1,8 +1,7 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
-export default function Modal(props) {
+export default function Modal(props: { message: string }) {
     const message = props.message
     const [open, setOpen] = useState(true)
 

@@ -87,7 +87,7 @@ function TicTacToe() {
             <h1 className='mb-4 underline'>Tic Tac Toe</h1>
             {cont && <>{player}'s' turn</>}
             {gameState.outcome == 'win' && <>
-                <Modal outcome message={player === "X" ? "O wins" : "X wins"} /></>}
+                <Modal message={player === "X" ? "O wins" : "X wins"} /></>}
             {gameState.outcome == 'tie' && <Modal message={'Tie game'} />}
             <div className='columns-3 bg-red-50 m-2'>
                 {gameBoard.map((row, rowindex) => {
