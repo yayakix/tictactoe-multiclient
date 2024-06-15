@@ -5,6 +5,7 @@ import {
 import './App.css'
 import { Board } from './game'
 import { useParams } from 'react-router-dom';
+import Modal from './Modal';
 
 function TicTacToe() {
     const { id } = useParams();
@@ -85,8 +86,9 @@ function TicTacToe() {
         <>
             <h1 className='mb-4 underline'>Tic Tac Toe</h1>
             {cont && <>{player}'s' turn</>}
-            {gameState.outcome == 'win' && <>winner: {player === "X" ? "O" : "X"}</>}
-            {gameState.outcome == 'tie' && <>Tie</>}
+            {gameState.outcome == 'win' && <>
+                <Modal message={player === "X" ? "O wins" : "X wins"} /></>}
+            {gameState.outcome == 'tie' && <Modal message={'Tie game'} />}
             <div className='columns-3 bg-red-50 m-2'>
                 {gameBoard.map((row, rowindex) => {
                     return <div className='' id={rowindex.toString()}>{

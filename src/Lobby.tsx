@@ -3,7 +3,6 @@ import {
     useEffect
 } from 'react'
 import './App.css'
-import { Board } from './game'
 
 function Lobby() {
     const [games, setGames] = useState<any>([])
@@ -21,9 +20,6 @@ function Lobby() {
                 setGames(data.games)
             });
     }, [])
-
-
-
     return (
         <div>
             <h1>Lobby</h1>
@@ -37,15 +33,7 @@ function Lobby() {
                         <a href={`/game/${games[x].id}`}><button>Game {idx + 1}</button></a>
                     </li>
                 })}
-
-                <li><button>Game 2</button></li>
-                <li><button>Game 3</button></li>
-                <li><button>Game 4</button></li>
-                <li><button>Game 5</button></li>
-
             </ul>
-
-
         </div>
     )
 }
