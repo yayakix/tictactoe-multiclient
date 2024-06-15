@@ -29,7 +29,6 @@ function Lobby() {
             <h1>Lobby</h1>
             {/* show list of games ,ids attached to each item, on click make a get to that game*/}
             <ul>
-                {console.log('again', games)}
                 {Object.keys(games).map((x, idx) => {
                     console.log('erm', games[x].id)
 
