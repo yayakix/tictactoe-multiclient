@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Root from './routes/root.tsx';
 import TicTacToe from './TicTacToe.tsx';
+import Modal from './Modal.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/game/:id",
     element: <TicTacToe />,
+  },
+  {
+    path: "/modal",
+    element: <Modal />,
   },
 ]);
 

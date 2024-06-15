@@ -29,6 +29,7 @@ const checkFunc = (array: Item[]) => {
 //   [["", "", ""],
 //   ["", "", ""],
 //   ["", "", ""],]
+
 const getColumns = (b: typeof board): Item[] => {
   const column1: Item = [b[0][0], b[1][0], b[2][0]];
   const column2: Item = [b[0][1], b[1][1], b[2][1]];
@@ -72,5 +73,3 @@ export const checkBoard = (b: typeof board) => {
   }
   return checkOutcome;
 };
-// console.log(checkBoard(board));
-// console.log(checkBoard(otherboard));
