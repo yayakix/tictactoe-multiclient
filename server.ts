@@ -2,6 +2,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { checkBoard } from "./src/game";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
 import session from "express-session";
 
 function uuidv4(): string {
@@ -16,8 +17,10 @@ function uuidv4(): string {
 }
 
 const app: Express = express();
-const port = process.env.PORT || 4000;
+console.log(process.env.PORT);
+const port = process.env.PORT || 4001;
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+// app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -74,7 +77,6 @@ const verifyPlayer = async (
   if (!game) {
     return res.status(400).send(game);
   }
-  console.log(game);
   if (req.cookies.user_id === game.player1.id) {
     // this is player 1
     req.body.currentPlayer = "player1";
@@ -84,8 +86,6 @@ const verifyPlayer = async (
     req.body.currentPlayer = "player2";
     console.log("user 2 online...");
   } else {
-    console.log("no cookies set on the game yet ");
-
     const fetchCookie = async () => {
       const newcookie = uuidv4();
       if (!req.cookies.user_id) {
@@ -97,10 +97,8 @@ const verifyPlayer = async (
     const usersCookie = await fetchCookie();
     if (game.player1.id == "") {
       game.player1.id = usersCookie;
-      console.log("jere");
     } else if (game.player2.id == "" && usersCookie !== game.player1.id) {
       game.player2.id = usersCookie;
-      console.log("jere2");
     } else {
       console.log("the game is occupied");
     }
