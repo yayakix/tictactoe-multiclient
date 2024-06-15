@@ -7,17 +7,12 @@ import { Board } from './game'
 import { useParams } from 'react-router-dom';
 
 function TicTacToe() {
-
     const { id } = useParams();
-
-
     const blankBoard = [
         ["", "", ""],
         ["", "", ""],
         ["", "", ""],
     ] satisfies Board
-
-    const [game, setGame] = useState<any>(null)
 
     const [player, setPlayer] = useState('')
     const [gameBoard, setGameBoard] = useState(blankBoard)
@@ -25,18 +20,18 @@ function TicTacToe() {
     const [poller, setPoller] = useState(0)
     const [cont, setCont] = useState(true)
 
-
     useEffect(() => {
         const refresh = () => {
-            fetch(`http://localhost:4000/${id}`, {
-                method: "GET", // or 'PUT'
+            fetch(`http://localhost:4000/game/${id}`, {
+                method: "GET", // or 'PUT',
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: 'include'
                 // body: JSON.stringify(data),
             }).then(response => response.json())
                 .then(async data => {
-                    await setGame(data.game)
+                    console.log('what is here', data)
                     setPlayer(data.game.currentPlayer)
                     setGameBoard(data.game.board)
                     setGameState(data.game.winState)
@@ -60,6 +55,7 @@ function TicTacToe() {
     const handleMove = (data: { rowId: number; itemId: number }) => {
         fetch(`http://localhost:4000/game/${id}/move`, {
             method: "POST", // or 'PUT'
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json",
             },
@@ -83,7 +79,6 @@ function TicTacToe() {
 
             handleMove({ rowId: rowId, itemId: itemId })
         }
-
     }
 
     return (
@@ -105,7 +100,7 @@ function TicTacToe() {
             </br>
             <button onClick={() => {
                 setCont(true)
-                fetch("http://localhost:4000/game/tictactoe/restart", {
+                fetch(`http://localhost:4000/game/${id}/restart`, {
                     method: "POST", // or 'PUT'
                     headers: {
                         "Content-Type": "application/json",
@@ -117,7 +112,6 @@ function TicTacToe() {
                 window.location.reload()
             }}>Reset game</button>
             <a href='/'><button>Lobby</button></a>
-
         </>
     )
 }
