@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 function Lobby() {
     const url = 'https://tictactoe-multiclient.onrender.com'
+    // const url = process.env.BASE_URL
 
     const [games, setGames] = useState<any>([])
 
