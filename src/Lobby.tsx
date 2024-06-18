@@ -1,5 +1,5 @@
 import {
-    useState, MouseEvent,
+    useState,
     useEffect
 } from 'react'
 import './App.css'
