@@ -4,12 +4,13 @@ import {
 } from 'react'
 import './App.css'
 import { Board } from './game'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Modal from './Modal';
 
+const url = 'https://tictactoe-multiclient.onrender.com'
+// const url = 'http://localhost:4000'
+
 function TicTacToe() {
-    const url = 'https://tictactoe-multiclient.onrender.com'
-    // const url = 'http://localhost:4000'
     const { id } = useParams();
     const blankBoard = [
         ["", "", ""],
@@ -141,15 +142,14 @@ function TicTacToe() {
                             .then(data => {
                                 setGameBoard(data.game.board)
                             });
-                        window.location.reload()
                     }}>
                         Reset Game
                     </button>
-                    <a href='/'>
+                    <Link to='/'>
                         <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mx-2">
                             Lobby
                         </button>
-                    </a>
+                    </Link>
 
                 </div>
             </div>
