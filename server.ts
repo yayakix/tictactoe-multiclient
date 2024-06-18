@@ -17,7 +17,7 @@ function uuidv4(): string {
 const app: Express = express();
 console.log(process.env.PORT);
 const port = process.env.PORT || 4001;
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(cors());
 // app.use(cors());
 
 app.use(express.json());
