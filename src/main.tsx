@@ -9,6 +9,8 @@ import {
 import Root from './routes/root.tsx';
 import TicTacToe from './TicTacToe.tsx';
 import Modal from './Modal.tsx';
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    {/* <App /> */}
+    <ThemeProvider>
+      <RouterProvider router={router} />
+
+    </ThemeProvider>
+
   </React.StrictMode>,
 )
